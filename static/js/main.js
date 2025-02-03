@@ -29,8 +29,8 @@ let chatSocket = null;
 
 function connectWebSocket(roomName) {
     const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const wsPath = `${wsScheme}://${window.location.host}/ws/chat/${roomName}/`;
-    
+    const host = window.location.host;
+    const wsPath = `${wsScheme}://${host}/ws/chat/${roomName}/`;
     chatSocket = new WebSocket(wsPath);
 
     chatSocket.onmessage = function(e) {
