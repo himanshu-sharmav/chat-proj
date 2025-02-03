@@ -1,0 +1,50 @@
+{% extends 'chat/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="chat-header">
+        <h2>Chat with {{ other_user.username }}</h2>
+    </div>
+    
+    <div class="messages-container" id="messages">
+        {% for message in messages %}
+            <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+                <div class="message-content">{{ message.content }}</div>
+                <div class="message-time">{{ message.timestamp|date:"H:i" }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="message-input">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<!-- Hidden inputs for user IDs -->
+<input type="hidden" id="currentUserId" value="{{ request.user.id }}">
+<input type="hidden" id="receiverId" value="{{ other_user.id }}">
+
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    // Initialize WebSocket connection when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const userId1 = parseInt('{{ request.user.id }}');
+        const userId2 = parseInt('{{ other_user.id }}');
+        const roomName = [userId1, userId2].sort((a, b) => a - b).join('_');
+        connectWebSocket(roomName);
+        
+        // Scroll to bottom of messages
+        const messagesContainer = document.getElementById('messages');
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    });
+</script>
+{% endblock %}
+
+{% block right_panel %}
+<div class="chat-info">
+    <h3>Chat Information</h3>
+    <p>Chatting with: {{ other_user.username }}</p>
+</div>
+{% endblock %} 
