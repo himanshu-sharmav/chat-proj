@@ -29,6 +29,16 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['django-chat-3g17.onrender.com', 'localhost', '127.0.0.1']
 
+# Add these lines after ALLOWED_HOSTS
+CSRF_TRUSTED_ORIGINS = [
+    'https://django-chat-3g17.onrender.com'
+]
+
+# Also update SECURE_PROXY_SSL_HEADER for HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Application definition
 
