@@ -38,11 +38,13 @@ def chat_home(request):
 @login_required
 def chat_room(request, user_id):
     other_user = User.objects.get(id=user_id)
+    users = User.objects.exclude(id=request.user.id)
     messages = Message.objects.filter(
         (Q(sender=request.user, receiver=other_user) |
          Q(sender=other_user, receiver=request.user))
     ).order_by('timestamp')
     return render(request, 'chat/chat_room.html', {
         'other_user': other_user,
+        'users': users,
         'messages': messages
     })

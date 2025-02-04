@@ -2,12 +2,17 @@
 
 {% block left_menu %}
 <div class="users-list">
-    <h3>Users</h3>
-    {% for user in users %}
-        <div class="user-item">
-            <a href="{% url 'chat_room' user.id %}">{{ user.username }}</a>
-        </div>
-    {% endfor %}
+    <div class="users-list-header" onclick="toggleUsersList()">
+        <h3>Users</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="users-list-content" id="usersListContent">
+        {% for user in users %}
+            <div class="user-item">
+                <a href="{% url 'chat_room' user.id %}">{{ user.username }}</a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
 

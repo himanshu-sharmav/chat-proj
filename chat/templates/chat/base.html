@@ -9,7 +9,10 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="navbar-brand">Chat App</div>
+        <div class="navbar-brand">
+            <button class="toggle-menu-btn" onclick="toggleLeftMenu()">☰</button>
+            Chat App
+        </div>
         <div class="navbar-menu">
             {% if user.is_authenticated %}
                 <span>Welcome, {{ user.username }}</span>

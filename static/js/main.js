@@ -21,6 +21,30 @@ function toggleLeftMenu() {
     leftMenu.classList.toggle('active');
 }
 
+// Add this function for users list toggle
+function toggleUsersList() {
+    const content = document.getElementById('usersListContent');
+    const icon = document.querySelector('.toggle-icon');
+    content.classList.toggle('active');
+    icon.classList.toggle('active');
+    
+    // Store toggle state
+    const isActive = content.classList.contains('active');
+    localStorage.setItem('usersListOpen', isActive);
+}
+
+// Add this function to initialize the users list state
+function initializeUsersList() {
+    const content = document.getElementById('usersListContent');
+    const icon = document.querySelector('.toggle-icon');
+    const isOpen = localStorage.getItem('usersListOpen') === 'true';
+    
+    if (isOpen) {
+        content.classList.add('active');
+        icon.classList.add('active');
+    }
+}
+
 // Event listeners
 window.addEventListener('resize', handleScreenResize);
 window.addEventListener('load', handleScreenResize);
@@ -78,4 +102,9 @@ document.querySelector('#messageInput')?.addEventListener('keypress', function(e
     if (e.key === 'Enter') {
         sendMessage();
     }
+});
+
+// Add to your existing DOMContentLoaded listeners
+document.addEventListener('DOMContentLoaded', function() {
+    initializeUsersList();
 }); 
